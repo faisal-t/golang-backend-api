@@ -32,6 +32,8 @@ func (s *jwtService) GenerateToken(UserID int) (string, error) {
 
 	return signedToken, nil
 
+	//komentar
+
 }
 
 func (s *jwtService) ValidateToken(encodetoken string) (*jwt.Token, error) {
