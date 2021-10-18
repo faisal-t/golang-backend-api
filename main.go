@@ -3,8 +3,11 @@ package main
 import (
 	"bwa-golang/auth"
 	"bwa-golang/handler"
+	"bwa-golang/helper"
 	"bwa-golang/users"
 	"log"
+	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
@@ -34,4 +37,21 @@ func main() {
 	api.POST("/avatars", userHandler.UploadAvatar)
 	router.Run()
 
+}
+
+func authMiddleware(c *gin.Context) {
+	authHeader := c.GetHeader("Authorization")
+	if !strings.Contains(authHeader, "Bearer") {
+		response := helper.ApiResponse("Unauthorized", http.StatusUnauthorized, "error", nil)
+		c.AbortWithStatusJSON(http.StatusUnauthorized, response)
+		return
+	}
+
+	tokenString := ""
+	arrayToken := strings.Split(authHeader, " ")
+	if len(arrayToken) == 2 {
+		tokenString = arrayToken[1]
+	}
+
+	// token,err :=
 }
