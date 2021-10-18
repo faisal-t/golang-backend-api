@@ -137,7 +137,8 @@ func (h *userHandler) UploadAvatar(c *gin.Context) {
 	}
 
 	// must change to jwt token user not harcode
-	UserId := 1
+	currentUser := c.MustGet("currentUser").(users.User)
+	UserId := currentUser.ID
 
 	time := time.Now()
 	path := fmt.Sprintf("images/%d-%d-%d-%d-%d-%s", UserId, time.Year(), time.Month(), time.Day(), rand.Int(), file.Filename)
