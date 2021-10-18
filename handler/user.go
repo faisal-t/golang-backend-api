@@ -3,7 +3,10 @@ package handler
 import (
 	"bwa-golang/helper"
 	"bwa-golang/users"
+	"fmt"
+	"math/rand"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -104,6 +107,45 @@ func (h *userHandler) CheckEmailAvailability(c *gin.Context) {
 	}
 
 	response := helper.ApiResponse(metaMessage, http.StatusOK, "success", data)
+	c.JSON(http.StatusOK, response)
+
+}
+
+func (h *userHandler) UploadAvatar(c *gin.Context) {
+	file, err := c.FormFile("avatar")
+	if err != nil {
+		data := gin.H{"is_uploaded": false}
+		response := helper.ApiResponse("Failed To Upload Avatar", http.StatusOK, "error", data)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	// must change to jwt token user not harcode
+	UserId := 1
+
+	time := time.Now()
+	path := fmt.Sprintf("images/%d-%d-%d-%d-%d-%s", UserId, time.Year(), time.Month(), time.Day(), rand.Int(), file.Filename)
+	fmt.Println(path)
+
+	err = c.SaveUploadedFile(file, path)
+	if err != nil {
+		data := gin.H{"is_uploaded": false}
+		response := helper.ApiResponse("Failed To Upload Avatar", http.StatusOK, "error", data)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	_, err = h.userService.SaveAvatar(UserId, path)
+	if err != nil {
+		data := gin.H{"is_uploaded": false}
+		response := helper.ApiResponse("Failed To Upload Avatar", http.StatusOK, "error", data)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	data := gin.H{"is_uploaded": true}
+	response := helper.ApiResponse("Avatar Success Uploaded", http.StatusOK, "success", data)
+
 	c.JSON(http.StatusOK, response)
 
 }
