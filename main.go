@@ -39,19 +39,24 @@ func main() {
 
 }
 
-func authMiddleware(c *gin.Context) {
-	authHeader := c.GetHeader("Authorization")
-	if !strings.Contains(authHeader, "Bearer") {
-		response := helper.ApiResponse("Unauthorized", http.StatusUnauthorized, "error", nil)
-		c.AbortWithStatusJSON(http.StatusUnauthorized, response)
-		return
-	}
 
-	tokenString := ""
-	arrayToken := strings.Split(authHeader, " ")
-	if len(arrayToken) == 2 {
-		tokenString = arrayToken[1]
+func authMiddleware(authService auth.Service,userService users.Service) gin.HandlerFunc {
+	return func (c *gin.Context) {
+		authHeader := c.GetHeader("Authorization")
+		if !strings.Contains(authHeader, "Bearer") {
+			response := helper.ApiResponse("Unauthorized", http.StatusUnauthorized, "error", nil)
+			c.AbortWithStatusJSON(http.StatusUnauthorized, response)
+			return
+		}
+	
+		tokenString := ""
+		arrayToken := strings.Split(authHeader, " ")
+		if len(arrayToken) == 2 {
+			tokenString = arrayToken[1]
+		}
+	
+		token,err := 
 	}
-
-	// token,err :=
 }
+
+
