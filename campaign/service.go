@@ -12,9 +12,9 @@ func NewService(repository Repository) *service {
 	return &service{repository}
 }
 
-func (s *service) GetCampaigns(UserID int) ([]Campaign, error) {
-	if UserID != 0 {
-		campaigns, err := s.repository.FindByUserID(UserID)
+func (s *service) GetCampaigns(userID int) ([]Campaign, error) {
+	if userID != 0 {
+		campaigns, err := s.repository.FindByUserID(userID)
 		if err != nil {
 			return campaigns, err
 		}
