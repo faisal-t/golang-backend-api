@@ -40,7 +40,7 @@ func main() {
 
 }
 
-//midlewareeee
+//midleware
 func authMiddleware(authService auth.Service, userService users.Service) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
