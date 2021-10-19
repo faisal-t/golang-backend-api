@@ -2,6 +2,7 @@ package main
 
 import (
 	"bwa-golang/auth"
+	"bwa-golang/campaign"
 	"bwa-golang/handler"
 	"bwa-golang/helper"
 	"bwa-golang/users"
@@ -24,6 +25,7 @@ func main() {
 	}
 
 	userRepository := users.NewRepository(db)
+	campaignRepository := campaign.NewRepository(db)
 	userService := users.NewService(userRepository)
 	authService := auth.NewService()
 
