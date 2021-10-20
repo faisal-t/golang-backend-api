@@ -38,6 +38,7 @@ func main() {
 	fmt.Println(len(campaigns))
 
 	router := gin.Default()
+	router.Static("/images", "./images")
 	api := router.Group("/api/v1")
 
 	api.POST("/users", userHandler.RegisterUser)
