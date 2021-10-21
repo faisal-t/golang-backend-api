@@ -11,7 +11,6 @@ type CampaignFormater struct {
 	Slug             string `json:"slug"`
 }
 
-//for formating response
 func FormatCampaign(campaign Campaign) CampaignFormater {
 	campaignFormater := CampaignFormater{}
 	campaignFormater.ID = campaign.ID
