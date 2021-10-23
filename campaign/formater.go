@@ -30,7 +30,6 @@ func FormatCampaign(campaign Campaign) CampaignFormater {
 	return campaignFormater
 }
 
-// format campaigns
 func FormatCampaigns(campaigns []Campaign) []CampaignFormater {
 
 	campaignsFormater := []CampaignFormater{}
