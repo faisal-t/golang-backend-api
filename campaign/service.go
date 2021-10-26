@@ -2,7 +2,7 @@ package campaign
 
 type Service interface {
 	GetCampaigns(UserID int) ([]Campaign, error)
-	GetDetailCampaign(ID int) (Campaign, error)
+	GetDetailCampaign(input GetCampaignDetailInput) (Campaign, error)
 }
 
 type service struct {
@@ -38,5 +38,4 @@ func (s *service) GetDetailCampaign(ID int) (Campaign, error) {
 	}
 
 	return campaign, nil
-
 }
