@@ -19,7 +19,7 @@ type Campaign struct {
 	CreatedAt        time.Time
 	UpdatedAt        time.Time
 	CampaignImages   []CampaignImage
-	User 			 users.User
+	User             users.User
 }
 
 type CampaignImage struct {
@@ -30,5 +30,3 @@ type CampaignImage struct {
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
 }
-
-type
