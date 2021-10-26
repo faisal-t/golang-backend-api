@@ -37,3 +37,7 @@ func (r *repository) FindByUserID(userID int) ([]Campaign, error) {
 
 	return campaigns, nil
 }
+
+func (r *repository) FindByID(ID int) (Campaign, error) {
+
+}
