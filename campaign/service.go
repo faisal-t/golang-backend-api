@@ -31,8 +31,8 @@ func (s *service) GetCampaigns(userID int) ([]Campaign, error) {
 	return campaigns, nil
 }
 
-func (s *service) GetDetailCampaign(ID int) (Campaign, error) {
-	campaign, err := s.repository.FindByID(ID)
+func (s *service) GetDetailCampaign(input GetCampaignDetailInput) (Campaign, error) {
+	campaign, err := s.repository.FindByID(input.ID)
 	if err != nil {
 		return campaign, err
 	}
