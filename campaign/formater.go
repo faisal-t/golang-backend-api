@@ -76,6 +76,8 @@ func FormatCampaignDetail(campaign Campaign) CampaignDetailFormater {
 		campaiDetailgnFormater.ImageUrl = campaign.CampaignImages[0].FileName
 	}
 
+	var perks []string
+
 	for _, perk := range strings.Split(campaign.Perks, ",") {
 		perks = append(perks, strings.TrimSpace(perk))
 	}
