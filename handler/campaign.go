@@ -53,3 +53,8 @@ func (h *campaignHandler) GetDetailCampaign(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 
 }
+
+//panggil parameter dari user ke input struct
+//ambl current user dari jwt/handler
+//panggil service parameter nya input struct
+//panggil repository untuk simpan data

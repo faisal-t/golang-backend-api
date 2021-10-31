@@ -3,6 +3,7 @@ package campaign
 type Service interface {
 	GetCampaigns(UserID int) ([]Campaign, error)
 	GetDetailCampaign(input GetCampaignDetailInput) (Campaign, error)
+	CreateCampaignInput(input CreateCampaignInput) (Campaign, error)
 }
 
 type service struct {
