@@ -57,7 +57,7 @@ func (s *service) CreateCampaignInput(input CreateCampaignInput) (Campaign, erro
 	campaign.User.ID = input.User.ID
 
 	//pembuatan slug
-	slugCandidate := fmt.Sprintf("%s %s", input.Name, input.User.ID)
+	slugCandidate := fmt.Sprintf("%s %d", input.Name, input.User.ID)
 	campaign.Slug = slug.Make(slugCandidate)
 	newCampaign, err := s.repository.Save(campaign)
 	if err != nil {
