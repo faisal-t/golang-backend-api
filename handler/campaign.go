@@ -4,8 +4,11 @@ import (
 	"bwa-golang/campaign"
 	"bwa-golang/helper"
 	"bwa-golang/users"
+	"fmt"
+	"math/rand"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -119,11 +122,48 @@ func (h *campaignHandler) UpdateCampaign(c *gin.Context) {
 
 }
 
-//update campaign lankah :
-//user memasukan input
-//handler
-//mapping dari input ke input struct (ada 2)
+func (h *campaignHandler) UploadImage(c *gin.Context) {
+	var input campaign.CreateCampaignImageInput
+	err := c.ShouldBind(&input)
+	if err != nil {
+		response := helper.ApiResponse("Failed to Upload campaign Image", http.StatusBadRequest, "error", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
 
-//input dari user dan juga input dari uri
-//service
-//repository update data campaign
+	file, err := c.FormFile("file")
+	if err != nil {
+		data := gin.H{"is_uploaded": false}
+		response := helper.ApiResponse("Failed To Upload Campaign Image", http.StatusBadRequest, "error", data)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	currentUser := c.MustGet("currentUser").(users.User)
+	UserId := currentUser.ID
+
+	time := time.Now()
+	path := fmt.Sprintf("images/%d-%d-%d-%d-%d-%s", UserId, time.Year(), time.Month(), time.Day(), rand.Intn(10000), file.Filename)
+	fmt.Println(path)
+
+	err = c.SaveUploadedFile(file, path)
+	if err != nil {
+		data := gin.H{"is_uploaded": false}
+		response := helper.ApiResponse("Failed To Upload Campaign Image", http.StatusBadRequest, "error", data)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	_, err = h.service.SaveCampaignImage(input, path)
+	if err != nil {
+		data := gin.H{"is_uploaded": false}
+		response := helper.ApiResponse("Failed To Upload Campaign Image", http.StatusBadRequest, "error", data)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	data := gin.H{"is_uploaded": true}
+	response := helper.ApiResponse("Campaign Image Success Uploaded", http.StatusOK, "success", data)
+	c.JSON(http.StatusOK, response)
+
+}
