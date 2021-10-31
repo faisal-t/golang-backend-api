@@ -141,7 +141,7 @@ func (h *userHandler) UploadAvatar(c *gin.Context) {
 	UserId := currentUser.ID
 
 	time := time.Now()
-	path := fmt.Sprintf("images/%d-%d-%d-%d-%d-%s", UserId, time.Year(), time.Month(), time.Day(), rand.Intn(10000), file.Filename)
+	path := fmt.Sprintf("images/%d-%d-%d-%d-%d-%s-%s", UserId, time.Year(), time.Month(), time.Day(), rand.Intn(9999999), "avatar", file.Filename)
 	fmt.Println(path)
 
 	err = c.SaveUploadedFile(file, path)

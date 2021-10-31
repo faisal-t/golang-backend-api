@@ -126,8 +126,10 @@ func (h *campaignHandler) UploadImage(c *gin.Context) {
 	var input campaign.CreateCampaignImageInput
 	err := c.ShouldBind(&input)
 	if err != nil {
-		response := helper.ApiResponse("Failed to Upload campaign Image", http.StatusBadRequest, "error", nil)
-		c.JSON(http.StatusBadRequest, response)
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"error": errors}
+		response := helper.ApiResponse("Failed to update campaign", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
 
@@ -143,7 +145,7 @@ func (h *campaignHandler) UploadImage(c *gin.Context) {
 	UserId := currentUser.ID
 
 	time := time.Now()
-	path := fmt.Sprintf("images/%d-%d-%d-%d-%d-%s", UserId, time.Year(), time.Month(), time.Day(), rand.Intn(10000), file.Filename)
+	path := fmt.Sprintf("images/%d-%d-%d-%d-%d-%s-%s", UserId, time.Year(), time.Month(), time.Day(), rand.Intn(9999999), "campaign", file.Filename)
 	fmt.Println(path)
 
 	err = c.SaveUploadedFile(file, path)
