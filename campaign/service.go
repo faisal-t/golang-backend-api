@@ -9,7 +9,7 @@ import (
 type Service interface {
 	GetCampaigns(UserID int) ([]Campaign, error)
 	GetDetailCampaign(input GetCampaignDetailInput) (Campaign, error)
-	CreateCampaignInput(input CreateCampaignInput) (Campaign, error)
+	CreateCampaign(input CreateCampaignInput) (Campaign, error)
 }
 
 type service struct {
@@ -47,7 +47,7 @@ func (s *service) GetDetailCampaign(input GetCampaignDetailInput) (Campaign, err
 	return campaign, nil
 }
 
-func (s *service) CreateCampaignInput(input CreateCampaignInput) (Campaign, error) {
+func (s *service) CreateCampaign(input CreateCampaignInput) (Campaign, error) {
 	campaign := Campaign{}
 	campaign.Name = input.Name
 	campaign.ShortDescription = input.ShortDescription
