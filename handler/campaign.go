@@ -83,5 +83,9 @@ func (h *campaignHandler) CreateCampaign(c *gin.Context) {
 
 }
 
-//panggil parameter dari user ke input struct
-//ambl current user dari jwt/handler
+//update campaign lankah :
+//user memasukan input
+//handler
+//input dari user dan juga input dari uri
+//service
+//repository update data campaign
