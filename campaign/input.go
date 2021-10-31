@@ -1,6 +1,6 @@
 package campaign
 
-import "os/user"
+import "bwa-golang/users"
 
 type GetCampaignDetailInput struct {
 	ID int `uri:"id" binding:"required"`
@@ -12,5 +12,5 @@ type CreateCampaignInput struct {
 	Description      string `json:"description"`
 	GoalAmount       int    `json:"goal_amount"`
 	Perks            string `json:"perks"`
-	User             user.User
+	User             users.User
 }
