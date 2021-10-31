@@ -3,6 +3,7 @@ package handler
 import (
 	"bwa-golang/campaign"
 	"bwa-golang/helper"
+	"bwa-golang/users"
 	"net/http"
 	"strconv"
 
@@ -54,7 +55,33 @@ func (h *campaignHandler) GetDetailCampaign(c *gin.Context) {
 
 }
 
+func (h *campaignHandler) CreateCampaign(c *gin.Context) {
+	var input campaign.CreateCampaignInput
+	err := c.ShouldBindJSON(&input)
+
+	if err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"error": errors}
+		response := helper.ApiResponse("Failed to created campaign", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	currentUser := c.MustGet("currentUser").(users.User)
+
+	input.User = currentUser
+
+	newCampaign, err := h.service.CreateCampaign(input)
+	if err != nil {
+		response := helper.ApiResponse("Failed to created campaign", http.StatusUnprocessableEntity, "error", nil)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	response := helper.ApiResponse("Success to created campaign", http.StatusUnprocessableEntity, "success", campaign.FormatCampaign(newCampaign))
+	c.JSON(http.StatusOK, response)
+
+}
+
 //panggil parameter dari user ke input struct
 //ambl current user dari jwt/handler
-//panggil service parameter nya input struct
-//panggil repository untuk simpan data
