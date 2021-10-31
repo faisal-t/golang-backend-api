@@ -78,7 +78,7 @@ func (h *campaignHandler) CreateCampaign(c *gin.Context) {
 		return
 	}
 
-	response := helper.ApiResponse("Success to created campaign", http.StatusUnprocessableEntity, "success", campaign.FormatCampaign(newCampaign))
+	response := helper.ApiResponse("Success to created campaign", http.StatusOK, "success", campaign.FormatCampaign(newCampaign))
 	c.JSON(http.StatusOK, response)
 
 }
