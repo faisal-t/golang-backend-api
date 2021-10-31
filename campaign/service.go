@@ -50,4 +50,6 @@ func (s *service) CreateCampaignInput(input CreateCampaignInput) (Campaign, erro
 	campaign.GoalAmount = input.GoalAmount
 	campaign.User.ID = input.User.ID
 
+	//pembuatan slug
+
 }
