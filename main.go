@@ -6,7 +6,6 @@ import (
 	"bwa-golang/handler"
 	"bwa-golang/helper"
 	"bwa-golang/users"
-	"fmt"
 	"log"
 	"net/http"
 	"strings"
@@ -25,17 +24,25 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
+	//repository
 	userRepository := users.NewRepository(db)
 	campaignRepository := campaign.NewRepository(db)
+	// transactionRepository := transaction.NewRepository(db)
+
+	//end repository
+
+	//service
 	userService := users.NewService(userRepository)
 	authService := auth.NewService()
 	campaignService := campaign.NewService(campaignRepository)
 
+	//endservice
+
+	//handler
 	userHandler := handler.NewUserHandler(userService, authService)
 	campaignHandler := handler.NewCampaignHandler(campaignService)
 
-	campaigns, _ := campaignService.GetCampaigns(12)
-	fmt.Println(len(campaigns))
+	//endhandler
 
 	router := gin.Default()
 	router.Static("/images", "./images")
