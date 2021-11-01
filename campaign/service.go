@@ -101,7 +101,7 @@ func (s *service) SaveCampaignImage(input CreateCampaignImageInput, fileLocation
 		return CampaignImage{}, err
 	}
 
-	if campaign.UserID != inputData.User.ID {
+	if campaign.UserID != input.User.ID {
 		return CampaignImage{}, errors.New("Not An Owner Of this campaign")
 	}
 
