@@ -5,6 +5,7 @@ import (
 	"bwa-golang/campaign"
 	"bwa-golang/handler"
 	"bwa-golang/helper"
+	"bwa-golang/transaction"
 	"bwa-golang/users"
 	"log"
 	"net/http"
@@ -27,7 +28,7 @@ func main() {
 	//repository
 	userRepository := users.NewRepository(db)
 	campaignRepository := campaign.NewRepository(db)
-	// transactionRepository := transaction.NewRepository(db)
+	transactionRepository := transaction.NewRepository(db)
 
 	//end repository
 
@@ -35,12 +36,14 @@ func main() {
 	userService := users.NewService(userRepository)
 	authService := auth.NewService()
 	campaignService := campaign.NewService(campaignRepository)
+	transactionService := transaction.NewService(transactionRepository)
 
 	//endservice
 
 	//handler
 	userHandler := handler.NewUserHandler(userService, authService)
 	campaignHandler := handler.NewCampaignHandler(campaignService)
+	transactionHanlder := handler.NewTransactionHandler(transactionService)
 
 	//endhandler
 
