@@ -43,6 +43,7 @@ func main() {
 	//handler
 	userHandler := handler.NewUserHandler(userService, authService)
 	campaignHandler := handler.NewCampaignHandler(campaignService)
+	transactionHanlder := handler.NewTransactionHandler(transactionService)
 
 	//endhandler
 
